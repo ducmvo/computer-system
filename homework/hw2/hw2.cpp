@@ -1,0 +1,171 @@
+// AUTHOR: Duc Vo
+// FILE: hw2.cpp
+// DATE: 01/19/2022
+// PURPOSE: This program is used to test the function that convert a
+//          non-negative decimal number to a binary representation.
+// INPUT:   Prompts from user.
+// PROCESS: The program run test to verify that the binary conversion is correct.
+//          After the test, the program let use input the number, then convert
+//          and print out the binary representation of that number
+// OUTPUT:  Prints results of the test and binary representation of 
+//          the non-negative decimal number entered by user.
+#include <iostream>
+#include <string>
+#include <math.h>
+using namespace std;
+
+// Function:    runProgram
+// Purpose:     Prompts user for a non-negative decimal number and 
+//              call function toBinary() with user input in a loop.
+// Parameters:  None
+// Returns:     None
+void runProgram();
+
+// Function:    testToBinary
+// Purpose:     test function toBinary
+// Parameters:  None
+// Returns:     None
+void testToBinary();
+
+// Function:    toBinary
+// Purpose:     Validate and Convert a valid input of decimal number 
+//              to the binary representation
+// Parameters:  user input string, could be any types
+// Returns:     the binary string representation of the input decimal number,
+//              -1 if the input is invalid
+string toBinary(string input);
+
+// Function:    validateInput
+// Purpose:     Check wether an input is a valid non-negative decimal number 
+//              and convert it to a long integer format.
+//              Throw exceptions if input is invalid in the conversion process
+// Parameters:  the string input to be validated
+// Returns:     the long integer representing the input number
+unsigned long validateInput(string input);
+
+int main()
+{
+    cout << "\n==== HOMEWORK 2 ====" << endl;
+    testToBinary();
+    runProgram();
+    return 0;
+}
+
+void runProgram()
+{
+    cout << "\n==== WELCOME TO BINARY CONVERSION ====" << endl;
+
+    char choice = 'Y';
+    while (choice == 'Y')
+    {
+
+        string input;
+        unsigned long num;
+        bool isValid = false;
+
+        while (choice == 'Y')
+        {
+            cout << "Enter a non-negative decimal: ";
+            getline(cin, input);
+            try
+            {   
+                // Validate notify user with invalid input
+                validateInput(input); 
+                string binary = toBinary(input);
+                cout << "BINARY: " << binary << endl;
+
+                cout << "\nConvert another decimal? (Y/N) ";
+                getline(cin, input);
+                choice = input[0];
+                choice = toupper(choice);
+            }
+            catch (invalid_argument &iae)
+            {
+                cout << "> " << iae.what() << endl;
+                cout << "> "
+                     << "please enter a valid decimal...\n"
+                     << endl;
+            }
+        }
+    }
+    cout << "\n==== THANK YOU FOR USING BINARY CONVERSION ====" << endl;
+}
+
+unsigned long validateInput(string input)
+{
+    unsigned long num;
+    try
+    {
+        num = stoul(input);
+        if (input[0] == '-')
+            throw invalid_argument("input cannot be negative");
+    }
+    catch (out_of_range &oore)
+    {
+        throw invalid_argument("input out of range");
+    }
+    catch (invalid_argument &iae)
+    {
+        throw invalid_argument("input is invalid");
+    }
+    return num;
+}
+
+string toBinary(string input)
+{
+    unsigned long num;
+    string binary;
+    try
+    {
+        // Validate for testing
+        num = validateInput(input);
+        if (num == 0)
+            return "0";
+
+        while (num != 0)
+        {
+            binary = ((num % 2 == 0) ? "0" : "1") + binary;
+            num = num >> 1;
+        }
+    }
+    catch (invalid_argument &iae) {
+        binary = "-1";
+    }
+
+    return binary;
+}
+
+void testToBinary()
+{
+    string MAX_LONG = "18446744073709551615";
+    string OUT_OF_RANGE_LONG = "18446744073709551616";
+
+    cout << "\n==== TEST BINARY CONVERSION ====" << endl;
+    cout << "* Test 1 - convert 0: ";
+    string binary = toBinary("0");
+    cout << binary << endl;
+
+    cout << "* Test 2 - convert 1: ";
+    binary = toBinary("1");
+    cout << binary << endl;
+
+    cout << "* Test 3 - convert 100: ";
+    binary = toBinary("100");
+    cout << binary << endl;
+
+    cout << "* Test 4 - convert MAX_LONG " << MAX_LONG << ": ";
+    binary = toBinary(MAX_LONG);
+    cout << binary << endl;
+
+    cout << "* Test 5 - convert OUT_OF_RANGE_LONG " << OUT_OF_RANGE_LONG << ": ";
+    binary = toBinary(OUT_OF_RANGE_LONG);
+    cout << binary << endl;
+
+    cout << "* Test 6 - convert negative -1: ";
+    binary = toBinary("-1");
+    cout << binary << endl;
+
+    cout << "* Test 7 - convert invalid \"random-string\": ";
+    binary = toBinary("random-string");
+    cout << binary << endl;
+}
