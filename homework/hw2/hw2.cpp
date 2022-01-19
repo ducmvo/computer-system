@@ -7,7 +7,7 @@
 // PROCESS: The program run test to verify that the binary conversion is correct.
 //          After the test, the program let use input the number, then convert
 //          and print out the binary representation of that number
-// OUTPUT:  Prints results of the test and binary representation of 
+// OUTPUT:  Prints results of the test and binary representation of
 //          the non-negative decimal number entered by user.
 #include <iostream>
 #include <string>
@@ -15,7 +15,7 @@
 using namespace std;
 
 // Function:    runProgram
-// Purpose:     Prompts user for a non-negative decimal number and 
+// Purpose:     Prompts user for a non-negative decimal number and
 //              call function toBinary() with user input in a loop.
 // Parameters:  None
 // Returns:     None
@@ -28,7 +28,7 @@ void runProgram();
 void testToBinary();
 
 // Function:    toBinary
-// Purpose:     Validate and Convert a valid input of decimal number 
+// Purpose:     Validate and Convert a valid input of decimal number
 //              to the binary representation
 // Parameters:  user input string, could be any types
 // Returns:     the binary string representation of the input decimal number,
@@ -36,7 +36,7 @@ void testToBinary();
 string toBinary(string input);
 
 // Function:    validateInput
-// Purpose:     Check wether an input is a valid non-negative decimal number 
+// Purpose:     Check wether an input is a valid non-negative decimal number
 //              and convert it to a long integer format.
 //              Throw exceptions if input is invalid in the conversion process
 // Parameters:  the string input to be validated
@@ -58,19 +58,15 @@ void runProgram()
     char choice = 'Y';
     while (choice == 'Y')
     {
-
         string input;
-        unsigned long num;
-        bool isValid = false;
-
         while (choice == 'Y')
         {
             cout << "Enter a non-negative decimal: ";
             getline(cin, input);
             try
-            {   
+            {
                 // Validate notify user with invalid input
-                validateInput(input); 
+                validateInput(input);
                 string binary = toBinary(input);
                 cout << "BINARY: " << binary << endl;
 
@@ -128,7 +124,8 @@ string toBinary(string input)
             num = num >> 1;
         }
     }
-    catch (invalid_argument &iae) {
+    catch (invalid_argument &iae)
+    {
         binary = "-1";
     }
 
