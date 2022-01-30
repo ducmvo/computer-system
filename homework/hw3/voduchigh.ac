@@ -1,0 +1,17 @@
+# voduchigh.ac
+# initialize values
+        lli r1 0 # max number
+        lli r2 0 # input number
+        lli r3 0 # compare r1 & r2
+# user input loop
+loop:   in r2
+        bez r2 &loop
+        bgz r2 &then
+        bez r0 &end
+then:   sub r3 r1 r2 
+        bgz r3 &loop
+        bez r0 &swap
+swap:   addi r1 r2 0
+        bez r0 &loop
+end:    out r1   # output max 
+        .halt    # end program
