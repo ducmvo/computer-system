@@ -5,8 +5,7 @@
 # Register usage:
 # r1: highest number
 # r2: array value
-# r3: compare array value and current highest number (subtraction)
-# r7: array address
+# r3: compare input value and current highest number (subtraction)
 
 #CODE
 
@@ -18,14 +17,14 @@ loop: in r2
       bgz r2 &then
       bez r0 &end
 
-# compare array value and current highest number
+# compare input value and current highest number
 # swap if value greater than current highest number
-# jump back to loop otherwise
+# jump back to loop if no swap
 then: sub r3 r2 r1   
       bgz r3 &swap   
       bez r0 &loop
 
-# replace current highest number with current array value  
+# replace current highest number with current input value  
 # then jump back to loop
 swap: addi r1 r2 0   
       bez r0 &loop   # return to loop
