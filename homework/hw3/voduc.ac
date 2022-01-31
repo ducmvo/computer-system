@@ -1,7 +1,7 @@
 # voduchigh.ac
 # Author: Duc Vo
 # Highest Number Program
-# Get the highest numbers from a test array
+# Get the highest numbers from multiple user inputs
 # Register usage:
 # r1: highest number
 # r2: array value
@@ -9,24 +9,19 @@
 # r7: array address
 
 #CODE
-# load base array address
-      lli  r7 &list 
-      lui  r7 &list
 
-# load array input value
+# prompt user input value
 # jump to end program if value is negative
 # jump to then to compare and swap with current highest number
-loop: lw  r2 r7 0    
+loop: in r2    
       bez r2 &then
       bgz r2 &then
       bez r0 &end
 
-# reassign to next array value address 
-# then compare array value and current highest number
+# compare array value and current highest number
 # swap if value greater than current highest number
 # jump back to loop otherwise
-then: addi r7 r7 1   
-      sub r3 r2 r1   
+then: sub r3 r2 r1   
       bgz r3 &swap   
       bez r0 &loop
 
@@ -38,17 +33,3 @@ swap: addi r1 r2 0
 # output highest number and end program
 end:  out r1         
       .halt      
-
-#DATA
-# list of test input numbers
-list: .fill 11
-      .fill 0
-      .fill 43
-      .fill 212
-      .fill 32767 # max decimal
-      .fill 555
-      .fill 0x7fff # max hex
-      .fill 987
-      .fill 17
-      .fill 345
-      .fill -32768 # end program with a negative number 
