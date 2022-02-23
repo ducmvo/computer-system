@@ -13,8 +13,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <climits>
 using namespace std;
-
 
 template <typename T>
 void swap(T, int, int);
@@ -62,7 +62,6 @@ void runProgram(bool test = false);
 //              otherwise the run the main program with user input
 // Parameters:  test boolean
 // Returns:     none
-
 
 int main()
 {
@@ -146,18 +145,16 @@ void runProgram(bool test)
     short *scores;
     int size;
 
-    const short MIN = 0, MAX = 100;
-
     if (test)
     {
         size = 5;
-        const string *testNames = new string[size]{"King", "Lewis", "Goss", "Green", "Clinton"};
-        const short *testScores = new short[size]{100, 90, 98, 95, 96};
-
         const double expectedAvg = 95.80;
 
-        string *expectedSortedNames = new string[size]{"Lewis", "Green", "Clinton", "Goss", "King"};
-        short *expectedSortedScores = new short[size]{90, 95, 96, 98, 100};
+        const string testNames[] = {"King", "Lewis", "Goss", "Green", "Clinton"};
+        const short testScores[] = {100, 90, 98, 95, 96};
+
+        string expectedSortedNames[] = {"Lewis", "Green", "Clinton", "Goss", "King"};
+        short expectedSortedScores[] = {90, 95, 96, 98, 100};
 
         names = new string[size];
         scores = new short[size];
